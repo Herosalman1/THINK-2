@@ -84,19 +84,23 @@
             font-weight: bold;
         }
 
+        /* YAHAN HEIGHT FIX KI HAI - Taaki GIF 3 bada ho sake */
         .gif-container {
-            height: 250px; 
+            min-height: 250px; 
             display: flex;
             justify-content: center;
             align-items: center;
             margin-bottom: 30px;
         }
 
+        /* Yahan se Max-Width/Height hata diya gaya hai */
         .gif-container img {
+            max-width: none;
+            max-height: none;
             object-fit: contain;
             pointer-events: none;
             border-radius: 12px;
-            transition: all 0.2s ease; /* GIF size/position ekdam smoothly change honge */
+            transition: all 0.2s ease; 
         }
 
         .container {
@@ -196,7 +200,6 @@
         <h1 id="dynamic-question">हमेशा मेरे दोस्त बनकर रहोगे ना तुम ?</h1>
         
         <div class="gif-container">
-            <!-- ID UPDATE KIYA GAYA HAI -->
             <img id="main-gif" src="" alt="cute animals asking">
         </div>
         
@@ -209,7 +212,6 @@
     <!-- Success Screen Content -->
     <div id="success-screen" class="container hidden">
         <div class="gif-container">
-            <!-- ID UPDATE KIYA GAYA HAI -->
             <img id="success-gif" src="" alt="funny success gif">
         </div>
         <h1 id="dynamic-success">करवा दिया ना OK !! 😂 😁 🤪</h1>
@@ -223,7 +225,7 @@
     <!-- ================= JAVASCRIPT ================= -->
     <script>
         // ====================================================================
-        // ⚙️ GIF SETTINGS (YAHAN SE TOP, LEFT, WIDTH, HEIGHT CHANGE KRE)
+        // ⚙️ GIF SETTINGS 
         // ====================================================================
         
         // GIF 1: Normal (Start screen wala GIF)
@@ -239,8 +241,8 @@
         const GIF_2 = { 
             url: "https://media.tenor.com/906nGAL7Xw0AAAAi/mochi-peachcat-cute-cat.gif", 
             top: "10px", 
-            left: "1px", // Left khiskane ke liye -30px (Ya apni zarurat ke hisaab se badlen)
-            width: "210px", // Size change karne ke liye
+            left: "1px", 
+            width: "210px", 
             height: "auto" 
         };
 
@@ -249,8 +251,8 @@
             url: "https://c.tenor.com/fSy0LIrSG7UAAAAC/tenor.gif", 
             top: "0px", 
             left: "0px", 
-            width: "200px", 
-            height: "auto" 
+            width: "350px", 
+            height: "350px" 
         };
 
         // ====================================================================
