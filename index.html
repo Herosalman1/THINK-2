@@ -3,51 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- ====== SNAPCHAT / WHATSAPP LINK PREVIEW FIX ====== -->
-    <title>Open Karke Dekho 👀</title>
-    <meta property="og:title" content="Open Karke Dekho 👀">
-    <meta property="og:description" content="Tumhare liye ek sawaal hai...">
-    <meta property="og:type" content="website">
+    <title>Prank Link Generator</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             background-color: #fcd5de;
-            font-family: "Quicksand", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            text-align: center;
-            overflow: hidden; 
+            font-family: "Quicksand", sans-serif;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; text-align: center;
         }
 
-        /* =========================================
-           1. LINK GENERATOR UI
-           ========================================= */
         #generator-ui { 
-            display: none; 
-            background: #ffffff; 
-            padding: 40px 35px; 
-            border-radius: 24px; 
-            width: 90%; 
-            max-width: 480px; 
-            box-shadow: 0 15px 35px rgba(239, 110, 126, 0.15); 
-            z-index: 100; 
+            background: #ffffff; padding: 40px 35px; border-radius: 24px; 
+            width: 90%; max-width: 480px; box-shadow: 0 15px 35px rgba(239, 110, 126, 0.15); 
         }
-        #generator-ui h2 { 
-            text-align: center; color: #ef6e7e; margin-bottom: 30px; font-weight: 700; font-size: 1.8rem;
-        }
+        #generator-ui h2 { color: #ef6e7e; margin-bottom: 30px; font-weight: 700; font-size: 1.8rem; }
+        
         .input-group { margin-bottom: 20px; text-align: left; }
         .input-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #4a4a4a; font-size: 0.95rem; }
         .input-group input { 
@@ -73,98 +49,10 @@
             border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 0.95rem; transition: background 0.2s;
         }
         .action-btn:hover { background-color: #df5869; }
-
-        /* =========================================
-           2. ADVANCE PRANK UI CSS
-           ========================================= */
-        h1 {
-            color: #ff4d6d;
-            font-size: 2.2rem;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-
-        /* YAHAN HEIGHT FIX KI HAI - Taaki GIF 3 bada ho sake */
-        .gif-container {
-            min-height: 250px; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        /* Yahan se Max-Width/Height hata diya gaya hai */
-        .gif-container img {
-            max-width: none;
-            max-height: none;
-            object-fit: contain;
-            pointer-events: none;
-            border-radius: 12px;
-            transition: all 0.2s ease; 
-        }
-
-        .container {
-            position: relative;
-            z-index: 10;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-        }
-
-        .buttons-wrapper {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            align-items: center;
-            min-height: 50px; 
-        }
-
-        .prank-btn {
-            background-color: #ffffff;
-            color: #000000;
-            border: 1px solid #000000;
-            border-radius: 25px;
-            padding: 10px 30px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.1s;
-            white-space: nowrap;
-            font-family: "Quicksand", sans-serif;
-        }
-
-        .prank-btn:active {
-            transform: scale(0.95);
-        }
-
-        #btn-yes { position: relative; z-index: 2; }
-        #btn-no { position: relative; z-index: 3; transition: left 0.1s, top 0.1s; }
-
-        .hidden { display: none !important; }
-
-        .go-back {
-            position: fixed; top: 40px; left: 40px; color: #000;
-            text-decoration: none; font-size: 1rem; cursor: pointer; z-index: 100;
-        }
-        .go-back:hover { text-decoration: underline; }
-
-        canvas {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 1;
-        }
-
-        /* WATERMARK */
-        .creator-tag {
-            position: fixed; bottom: 15px; right: 20px; font-size: 0.9rem;
-            font-weight: 700; color: #ef6e7e; text-decoration: none; z-index: 1000;
-        }
-        .creator-tag:hover { opacity: 0.75; transform: scale(1.05); }
     </style>
 </head>
 <body>
 
-    <!-- ================= UI 1: PREMIUM LINK GENERATOR ================= -->
     <div id="generator-ui">
         <h2>Prank Link Generator</h2>
         
@@ -191,105 +79,7 @@
         </div>
     </div>
 
-    <!-- ================= UI 2: ADVANCED PRANK SCREEN ================= -->
-    <canvas id="confetti" class="hidden"></canvas>
-    <a id="go-back" class="go-back hidden">← Go Back</a>
-
-    <!-- Asking Screen -->
-    <div id="ask-screen" class="container">
-        <h1 id="dynamic-question">हमेशा मेरे दोस्त बनकर रहोगे ना तुम ?</h1>
-        
-        <div class="gif-container">
-            <img id="main-gif" src="" alt="cute animals asking">
-        </div>
-        
-        <div class="buttons-wrapper">
-            <button class="prank-btn" id="btn-yes">हाँ बिल्कुल 😎</button>
-            <button class="prank-btn" id="btn-no">नहीं 🙄</button>
-        </div>
-    </div>
-
-    <!-- Success Screen Content -->
-    <div id="success-screen" class="container hidden">
-        <div class="gif-container">
-            <img id="success-gif" src="" alt="funny success gif">
-        </div>
-        <h1 id="dynamic-success">करवा दिया ना OK !! 😂 😁 🤪</h1>
-    </div>
-
-    <!-- Creator Tag -->
-    <a href="https://www.instagram.com/herosalman1_929/" target="_blank" class="creator-tag">
-        Made by :@Herosalman1
-    </a>
-
-    <!-- ================= JAVASCRIPT ================= -->
     <script>
-        // ====================================================================
-        // ⚙️ GIF SETTINGS 
-        // ====================================================================
-        
-        // GIF 1: Normal (Start screen wala GIF)
-        const GIF_1 = { 
-            url: "https://media.tenor.com/77DqRFoWaDMAAAAi/tkthao219-bubududu.gif", 
-            top: "-10px", 
-            left: "50px", 
-            width: "250px", 
-            height: "auto" 
-        };
-
-        // GIF 2: Hover (Yes button pe cursor le jane par jo GIF aata hai)
-        const GIF_2 = { 
-            url: "https://media.tenor.com/906nGAL7Xw0AAAAi/mochi-peachcat-cute-cat.gif", 
-            top: "10px", 
-            left: "1px", 
-            width: "210px", 
-            height: "auto" 
-        };
-
-        // GIF 3: Success (Yes pe click karne ke baad wala GIF)
-        const GIF_3 = { 
-            url: "https://c.tenor.com/fSy0LIrSG7UAAAAC/tenor.gif", 
-            top: "0px", 
-            left: "0px", 
-            width: "350px", 
-            height: "350px" 
-        };
-
-        // ====================================================================
-
-        // --- 1. APPLY GIF SETTINGS ON LOAD ---
-        const mainGif = document.getElementById('main-gif');
-        const successGif = document.getElementById('success-gif');
-
-        function setGif(element, config) {
-            element.src = config.url;
-            element.style.width = config.width;
-            element.style.height = config.height;
-            element.style.transform = `translate(${config.left}, ${config.top})`;
-        }
-
-        // Initialize GIFs
-        setGif(mainGif, GIF_1);
-        setGif(successGif, GIF_3);
-
-        // --- 2. CHECK URL FOR GENERATOR OR PRANK UI ---
-        const urlParams = new URLSearchParams(window.location.search);
-        const dataParam = urlParams.get('d');
-        
-        if (dataParam) {
-            document.getElementById('ask-screen').style.display = 'flex';
-            try {
-                const decoded = JSON.parse(decodeURIComponent(escape(atob(dataParam))));
-                if(decoded.q) document.getElementById('dynamic-question').innerText = decoded.q;
-                if(decoded.s) document.getElementById('dynamic-success').innerText = decoded.s;
-            } catch(e) {
-                console.log("Link error:", e);
-            }
-        } else {
-            document.getElementById('generator-ui').style.display = 'block';
-        }
-
-        // --- 3. LINK GENERATOR LOGIC ---
         function generateLink() {
             const q = document.getElementById('qInput').value.trim();
             const s = document.getElementById('sInput').value.trim();
@@ -300,8 +90,10 @@
             const base64Data = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
             const safeEncodedData = encodeURIComponent(base64Data);
             
-            let baseUrl = window.location.href.split('?')[0];
-            const finalLink = `${baseUrl}?d=${safeEncodedData}`;
+            // Yahan par ab ye automatically 'prank.html' ka link banayega
+            const currentPath = window.location.pathname;
+            const newPath = currentPath.substring(0, currentPath.lastIndexOf('/')) + '/prank.html';
+            const finalLink = window.location.origin + newPath + `?d=${safeEncodedData}`;
             
             document.getElementById('generatedUrl').innerText = finalLink;
             document.getElementById('resultBox').style.display = 'block';
@@ -321,145 +113,6 @@
             const linkText = document.getElementById('generatedUrl').innerText;
             if(linkText) { window.open(linkText, '_blank'); }
         }
-
-        // --- 4. ADVANCED PRANK LOGIC ---
-        const btnNo = document.getElementById('btn-no');
-        const btnYes = document.getElementById('btn-yes');
-        const askScreen = document.getElementById('ask-screen');
-        const successScreen = document.getElementById('success-screen');
-        const btnGoBack = document.getElementById('go-back');
-        const canvas = document.getElementById('confetti');
-        const ctx = canvas.getContext('2d');
-
-        // Preload Hover GIF
-        const preloadedImg = new Image();
-        preloadedImg.src = GIF_2.url;
-
-        // Apply GIF_2 Settings on Hover
-        btnYes.addEventListener('mouseenter', () => { 
-            setGif(mainGif, GIF_2);
-        });
-
-        // Reset to GIF_1 Settings when mouse leaves
-        btnYes.addEventListener('mouseleave', () => { 
-            setGif(mainGif, GIF_1);
-        });
-
-        const noTexts = [
-            "नहीं 🙄", "अरे पक्का? 🤔", "एक बार और सोच लो 😥", 
-            "ऐसे मत करो 🥺", "मत click करो 💔", "मान भी जाओ ना! 🌸", 
-            "प्लीज़ मान जाओ 🙏", "मत दबाओ ? 🥺", "मेरे जैसा दोस्त नही मिलेगा कही 🥺", 
-            "मत click करो यार? 🥺", "मान जाओ ना यार 🥺"
-        ];
-        
-        let noClickCount = 0;
-
-        function handleNoInteraction() {
-            noClickCount++;
-            btnNo.innerText = noTexts[noClickCount % noTexts.length];
-            btnNo.style.position = 'fixed';
-            
-            const safeWidth = window.innerWidth - btnNo.offsetWidth - 20;
-            const safeHeight = window.innerHeight - btnNo.offsetHeight - 20;
-            
-            const randomX = Math.max(10, Math.floor(Math.random() * safeWidth));
-            const randomY = Math.max(10, Math.floor(Math.random() * safeHeight));
-
-            btnNo.style.left = `${randomX}px`;
-            btnNo.style.top = `${randomY}px`;
-        }
-
-        btnNo.addEventListener('mouseover', handleNoInteraction);
-        btnNo.addEventListener('click', (e) => {
-            e.preventDefault();
-            handleNoInteraction();
-        });
-
-        btnYes.addEventListener('click', () => {
-            askScreen.style.display = 'none';
-            successScreen.classList.remove('hidden');
-            successScreen.style.display = 'flex';
-            btnGoBack.classList.remove('hidden'); 
-            canvas.classList.remove('hidden');
-            startConfetti();
-        });
-
-        btnGoBack.addEventListener('click', () => {
-            successScreen.style.display = 'none';
-            btnGoBack.classList.add('hidden');
-            canvas.classList.add('hidden');
-            askScreen.style.display = 'flex';
-            
-            noClickCount = 0;
-            btnNo.style.position = 'relative';
-            btnNo.style.left = 'auto';
-            btnNo.style.top = 'auto';
-            btnNo.innerText = noTexts[0];
-            
-            // Back karne par GIF 1 wapas reset ho jaye
-            setGif(mainGif, GIF_1); 
-            
-            stopConfetti();
-        });
-
-        // --- 5. CONFETTI LOGIC ---
-        let particles = [];
-        let animationId;
-
-        function startConfetti() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            particles = [];
-            
-            const colors = ['#ff4d6d', '#ffb3c1', '#2ec4b6', '#ff9f1c', '#ffffff'];
-            
-            for (let i = 0; i < 150; i++) {
-                particles.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height - canvas.height,
-                    w: Math.random() * 8 + 5,
-                    h: Math.random() * 8 + 5,
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    speed: Math.random() * 3 + 2,
-                    angle: Math.random() * 360,
-                    rotationSpeed: Math.random() * 4 - 2
-                });
-            }
-            animateConfetti();
-        }
-
-        function animateConfetti() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.y += p.speed;
-                p.angle += p.rotationSpeed;
-                
-                ctx.save();
-                ctx.translate(p.x, p.y);
-                ctx.rotate(p.angle * Math.PI / 180);
-                ctx.fillStyle = p.color;
-                ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
-                ctx.restore();
-
-                if (p.y > canvas.height) {
-                    p.y = -10;
-                    p.x = Math.random() * canvas.width;
-                }
-            });
-            animationId = requestAnimationFrame(animateConfetti);
-        }
-
-        function stopConfetti() {
-            cancelAnimationFrame(animationId);
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-        
-        window.addEventListener('resize', () => {
-            if (!canvas.classList.contains('hidden')) {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            }
-        });
     </script>
 </body>
 </html>
