@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- ====== SNAPCHAT / WHATSAPP LINK PREVIEW FIX ====== -->
+    <title>Open Karke Dekho 👀</title>
+    <meta property="og:title" content="Open Karke Dekho 👀">
+    <meta property="og:description" content="Tumhare liye ek sawaal hai...">
+    <meta property="og:type" content="website">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: #fcd5de;
+            font-family: "Quicksand", sans-serif;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; text-align: center; overflow: hidden; 
+        }
+
+        h1 { color: #ff4d6d; font-size: 2.2rem; margin-bottom: 20px; font-weight: bold; }
+        .gif-container { display: flex; justify-content: center; align-items: center; min-height: 250px; margin-bottom: 30px; }
+        .gif-container img { object-fit: contain; pointer-events: none; border-radius: 12px; transition: all 0.2s ease; }
+
+        .container { position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; width: 100%; }
+        .buttons-wrapper { display: flex; gap: 20px; justify-content: center; align-items: center; min-height: 50px; }
+
+        .prank-btn {
+            background-color: #ffffff; color: #000000; border: 1px solid #000000;
+            border-radius: 25px; padding: 10px 30px; font-size: 1.1rem; font-weight: 600;
+            cursor: pointer; transition: transform 0.1s; white-space: nowrap; font-family: "Quicksand", sans-serif;
+        }
+        .prank-btn:active { transform: scale(0.95); }
+
+        #btn-yes { position: relative; z-index: 2; }
+        #btn-no { position: relative; z-index: 3; transition: left 0.1s, top 0.1s; }
+
+        .hidden { display: none !important; }
+
+        .go-back {
+            position: fixed; top: 40px; left: 40px; color: #000;
+            text-decoration: none; font-size: 1rem; cursor: pointer; z-index: 100;
+        }
+        .go-back:hover { text-decoration: underline; }
+
+        canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+
+        .creator-tag {
+            position: fixed; bottom: 15px; right: 20px; font-size: 0.9rem;
+            font-weight: 700; color: #ef6e7e; text-decoration: none; z-index: 1000;
+        }
+        .creator-tag:hover { opacity: 0.75; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+
+    <canvas id="confetti" class="hidden"></canvas>
+    <a id="go-back" class="go-back hidden">← Go Back</a>
+
+    <!-- Asking Screen -->
+    <div id="ask-screen" class="container">
+        <h1 id="dynamic-question">हमेशा मेरे दोस्त बनकर रहोगे ना तुम ?</h1>
+        <div class="gif-container"><img id="main-gif" src="" alt="cute animals asking"></div>
+        <div class="buttons-wrapper">
+            <button class="prank-btn" id="btn-yes">हाँ बिल्कुल 😎</button>
+            <button class="prank-btn" id="btn-no">नहीं 🙄</button>
+        </div>
+    </div>
+
+    <!-- Success Screen Content -->
+    <div id="success-screen" class="container hidden">
+        <div class="gif-container"><img id="success-gif" src="" alt="funny success gif"></div>
+        <h1 id="dynamic-success">करवा दिया ना OK !! 😂 😁 🤪</h1>
+    </div>
+
+    <!-- Creator Tag -->
+    <a href="https://www.instagram.com/herosalman1_929/" target="_blank" class="creator-tag">
+        Made by :@Herosalman1
+    </a>
+
+    <script>
+        const GIF_1 = { url: "https://media.tenor.com/77DqRFoWaDMAAAAi/tkthao219-bubududu.gif", top: "-10px", left: "50px", width: "250px", height: "auto" };
+        const GIF_2 = { url: "https://media.tenor.com/906nGAL7Xw0AAAAi/mochi-peachcat-cute-cat.gif", top: "10px", left: "1px", width: "210px", height: "auto" };
+        const GIF_3 = { url: "https://c.tenor.com/fSy0LIrSG7UAAAAC/tenor.gif", top: "0px", left: "0px", width: "350px", height: "350px" };
+
+        const mainGif = document.getElementById('main-gif');
+        const successGif = document.getElementById('success-gif');
+
+        function setGif(element, config) {
+            element.src = config.url;
+            element.style.width = config.width;
+            element.style.height = config.height;
+            element.style.transform = `translate(${config.left}, ${config.top})`;
+        }
+
+        setGif(mainGif, GIF_1);
+        setGif(successGif, GIF_3);
+
+        // Fetch custom messages from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const dataParam = urlParams.get('d');
+        
+        if (dataParam) {
+            try {
+                const decoded = JSON.parse(decodeURIComponent(escape(atob(dataParam))));
+                if(decoded.q) document.getElementById('dynamic-question').innerText = decoded.q;
+                if(decoded.s) document.getElementById('dynamic-success').innerText = decoded.s;
+            } catch(e) { console.log("Link error:", e); }
+        }
+
+        const btnNo = document.getElementById('btn-no');
+        const btnYes = document.getElementById('btn-yes');
+        const askScreen = document.getElementById('ask-screen');
+        const successScreen = document.getElementById('success-screen');
+        const btnGoBack = document.getElementById('go-back');
+        const canvas = document.getElementById('confetti');
+        const ctx = canvas.getContext('2d');
+
+        const preloadedImg = new Image();
+        preloadedImg.src = GIF_2.url;
+
+        btnYes.addEventListener('mouseenter', () => { setGif(mainGif, GIF_2); });
+        btnYes.addEventListener('mouseleave', () => { setGif(mainGif, GIF_1); });
+
+        const noTexts = [
+            "नहीं 🙄", "अरे पक्का? 🤔", "एक बार और सोच लो 😥", 
+            "ऐसे मत करो 🥺", "मत click करो 💔", "मान भी जाओ ना! 🌸", 
+            "प्लीज़ मान जाओ 🙏", "मत दबाओ ? 🥺", "मेरे जैसा दोस्त नही मिलेगा कही 🥺", 
+            "मत click करो यार? 🥺", "मान जाओ ना यार 🥺"
+        ];
+        
+        let noClickCount = 0;
+
+        function handleNoInteraction() {
+            noClickCount++;
+            btnNo.innerText = noTexts[noClickCount % noTexts.length];
+            btnNo.style.position = 'fixed';
+            
+            const safeWidth = window.innerWidth - btnNo.offsetWidth - 20;
+            const safeHeight = window.innerHeight - btnNo.offsetHeight - 20;
+            
+            const randomX = Math.max(10, Math.floor(Math.random() * safeWidth));
+            const randomY = Math.max(10, Math.floor(Math.random() * safeHeight));
+
+            btnNo.style.left = `${randomX}px`;
+            btnNo.style.top = `${randomY}px`;
+        }
+
+        btnNo.addEventListener('mouseover', handleNoInteraction);
+        btnNo.addEventListener('click', (e) => { e.preventDefault(); handleNoInteraction(); });
+
+        btnYes.addEventListener('click', () => {
+            askScreen.style.display = 'none';
+            successScreen.classList.remove('hidden');
+            successScreen.style.display = 'flex';
+            btnGoBack.classList.remove('hidden'); 
+            canvas.classList.remove('hidden');
+            startConfetti();
+        });
+
+        btnGoBack.addEventListener('click', () => {
+            successScreen.style.display = 'none';
+            btnGoBack.classList.add('hidden');
+            canvas.classList.add('hidden');
+            askScreen.style.display = 'flex';
+            
+            noClickCount = 0;
+            btnNo.style.position = 'relative';
+            btnNo.style.left = 'auto';
+            btnNo.style.top = 'auto';
+            btnNo.innerText = noTexts[0];
+            setGif(mainGif, GIF_1); 
+            stopConfetti();
+        });
+
+        // Confetti Logic
+        let particles = [];
+        let animationId;
+
+        function startConfetti() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles = [];
+            const colors = ['#ff4d6d', '#ffb3c1', '#2ec4b6', '#ff9f1c', '#ffffff'];
+            for (let i = 0; i < 150; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    w: Math.random() * 8 + 5, h: Math.random() * 8 + 5,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    speed: Math.random() * 3 + 2, angle: Math.random() * 360, rotationSpeed: Math.random() * 4 - 2
+                });
+            }
+            animateConfetti();
+        }
+
+        function animateConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.y += p.speed; p.angle += p.rotationSpeed;
+                ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.angle * Math.PI / 180);
+                ctx.fillStyle = p.color; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); ctx.restore();
+                if (p.y > canvas.height) { p.y = -10; p.x = Math.random() * canvas.width; }
+            });
+            animationId = requestAnimationFrame(animateConfetti);
+        }
+
+        function stopConfetti() { cancelAnimationFrame(animationId); ctx.clearRect(0, 0, canvas.width, canvas.height); }
+        window.addEventListener('resize', () => {
+            if (!canvas.classList.contains('hidden')) { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        });
+    </script>
+</body>
+</html>
